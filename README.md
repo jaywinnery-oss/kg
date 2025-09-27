@@ -8,7 +8,7 @@ When disasters like floods hit communities in Nigeria, people are often stranded
 
 ## 💡 Our Solution
 
-A USSD-based emergency response system that works on any mobile phone, even without internet connectivity. Users simply dial `*123#` and get instant access to:
+A USSD-based emergency response system that works on any mobile phone, even without internet connectivity. Users simply dial `*384*CHANNEL#` (where CHANNEL is your Africa's Talking channel number) and get instant access to:
 
 - 🏠 **Emergency Shelter** - Find available accommodation
 - 🍽️ **Food Distribution** - Locate food centers and kitchens  
@@ -17,7 +17,7 @@ A USSD-based emergency response system that works on any mobile phone, even with
 ## 🔧 How It Works
 
 ### For Disaster Victims:
-1. **Dial `*123#`** on any mobile phone
+1. **Dial `*384*CHANNEL#`** on any mobile phone (CHANNEL = your Africa's Talking channel number)
 2. **Select service type** (1=Shelter, 2=Food, 3=Transport)
 3. **Enter location** (e.g., "Lokoja")
 4. **Get matched** with nearest available resources
@@ -65,7 +65,74 @@ pip install -r requirements.txt
 python app.py
 ```
 
-The system will start on `http://localhost:12000`
+The system will start on `http://localhost:8080`
+
+## ⚙️ Africa's Talking Configuration
+
+### Step 1: Get Your Channel Number
+1. Login to your Africa's Talking dashboard
+2. Go to **USSD** → **Create Channel**
+3. Select service code `*384#`
+4. Note down the **Channel number** provided (e.g., 17925, 46331, etc.)
+
+### Step 2: Configure Your Application
+Edit your `.env` file and update these values:
+
+```bash
+# Africa's Talking Configuration
+AT_USERNAME=your_username_here           # Your Africa's Talking username
+AT_API_KEY=your_api_key_here            # Your Africa's Talking API key
+USSD_SERVICE_CODE=*384#                 # Keep this as *384#
+USSD_CHANNEL=YOUR_CHANNEL_NUMBER_HERE   # ← Put your channel number here (e.g., 17925)
+```
+
+**Example Configuration**:
+```bash
+AT_USERNAME=sandbox
+AT_API_KEY=abcd1234567890
+USSD_SERVICE_CODE=*384#
+USSD_CHANNEL=17925                      # Your actual channel number
+```
+
+**Result**: Users will dial `*384*17925#` to access the emergency system
+
+### Step 3: Set Callback URL
+1. Run your application: `python app.py`
+2. Expose it using ngrok: `ngrok http 8080`
+3. Copy the HTTPS URL (e.g., `https://abc123.ngrok.io`)
+4. In Africa's Talking dashboard, set **Callback URL** to: `https://abc123.ngrok.io/ussd/callback`
+
+### Step 4: Test Your Service
+- Dial `*384*YOUR_CHANNEL#` from any mobile phone
+- You should see the emergency response menu
+
+### 🔧 Configuration Troubleshooting
+
+**Q: Where exactly do I put my channel number?**
+A: In the `.env` file, update the line:
+```bash
+USSD_CHANNEL=17925  # Replace 17925 with your actual channel number
+```
+
+**Q: What's my callback URL?**
+A: After running `python app.py` and `ngrok http 8080`, your callback URL will be:
+```
+https://your-ngrok-url.ngrok.io/ussd/callback
+```
+Copy this exact URL to Africa's Talking dashboard.
+
+**Q: How do I know if it's working?**
+A: Check your application logs when someone dials the USSD code. You should see:
+```
+INFO in routes: USSD request: +234801234567 -
+```
+
+**Q: What if I get "Service not available"?**
+A: Check that:
+1. Your callback URL is correctly set in Africa's Talking
+2. Your ngrok tunnel is active
+3. Your application is running on port 8080
+4. Your channel number matches what's in Africa's Talking dashboard
 
 ### Testing the USSD Flow
 
@@ -80,7 +147,7 @@ python test_ussd.py
 ## 📱 USSD Menu Structure
 
 ```
-*123# - Emergency Response
+*384*CHANNEL# - Emergency Response
 ├── 1 - Shelter
 │   ├── Enter location
 │   ├── View available options
@@ -94,6 +161,8 @@ python test_ussd.py
     ├── View transport options
     └── Confirm selection
 ```
+
+**Note**: Replace `CHANNEL` with your actual Africa's Talking channel number (e.g., `*384*17925#`)
 
 ## 🗄️ Database Schema
 

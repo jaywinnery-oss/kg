@@ -1,10 +1,20 @@
+/openhands/micromamba/envs/openhands/lib/python3.12/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+  warnings.warn(
+Initializing database...
+Sample data already exists, skipping initialization.
+Starting Emergency Response System on port 12000...
+USSD Callback URL: http://localhost:12000/ussd/callback
+Admin Dashboard: http://localhost:12000/admin/
+API Documentation: http://localhost:12000/docs
  * Serving Flask app 'app'
  * Debug mode: on
 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:12000
- * Running on http://10.2.34.15:12000
+ * Running on http://10.2.26.13:12000
 Press CTRL+C to quit
  * Restarting with stat
+/openhands/micromamba/envs/openhands/lib/python3.12/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+  warnings.warn(
  * Debugger is active!
- * Debugger PIN: 809-428-170
+ * Debugger PIN: 655-604-488
